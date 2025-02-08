@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authsafe - 双重认证解决方案</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        /* 导航栏样式 */
+        .navbar {
+            padding: 1rem 5%;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #2563eb; }
+        
+        /* 主标题区域 */
+        .hero {
+            text-align: center;
+            padding: 4rem 5%;
+            background: #f8fafc;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+        }
+        
+        /* 功能展示网格 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 4rem 5%;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* 下载区域 */
+        .download-section {
+            background: #2563eb;
+            color: white;
+            text-align: center;
+            padding: 4rem 5%;
+        }
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .download-btn {
+            padding: 1rem 2rem;
+            background: white;
+            color: #2563eb;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Authsafe</div>
+        <div>
+            <a href="#features">功能</a>
+            <a href="#pricing">价格</a>
+            <a href="#download">下载</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>为您的账户提供最安全的双重认证</h1>
+        <p>Authsafe让您的在线账户获得军事级安全保护</p>
+        <div class="download-buttons" style="margin-top: 2rem;">
+            <a href="#download" class="download-btn">立即免费使用</a>
+        </div>
+        <img src="https://via.placeholder.com/800x400" alt="Authsafe应用界面" style="margin-top: 3rem; max-width: 100%;">
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature-card">
+            <h3>无缝集成</h3>
+            <p>支持数千种在线服务，包括银行、社交网络和云平台</p>
+        </div>
+        <div class="feature-card">
+            <h3>离线访问</h3>
+            <p>即使没有网络连接也能生成安全代码</p>
+        </div>
+        <div class="feature-card">
+            <h3>跨平台同步</h3>
+            <p>在多个设备间安全同步您的认证信息</p>
+        </div>
+    </section>
+
+    <section class="download-section" id="download">
+        <h2>立即开始使用Authsafe</h2>
+        <p>支持所有主流平台</p>
+        <div class="download-buttons">
+            <a href="#" class="download-btn">iOS 下载</a>
+            <a href="#" class="download-btn">Android 下载</a>
+            <a href="#" class="download-btn">Windows 下载</a>
+        </div>
+    </section>
+
+    <script>
+        // 滚动时导航栏效果
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255,255,255,0.95)';
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'white';
+                navbar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
