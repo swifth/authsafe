@@ -17,7 +17,21 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #2563eb; }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-image {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            color: #2563eb; 
+        }
         
         /* 主标题区域 */
         .hero {
@@ -55,25 +69,107 @@
         .download-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 2rem;
             margin-top: 2rem;
+            flex-wrap: wrap;
         }
         .download-btn {
-            padding: 1rem 2rem;
+            padding: 1rem 3rem;
             background: white;
             color: #2563eb;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+        
+        /* 轮播图样式 */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 3rem auto 0;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #f8fafc;
+        }
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        .carousel-control {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-family: monospace;
+            transition: background-color 0.3s;
+        }
+        .carousel-control:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+        .indicator.active {
+            background: white;
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Authsafe</div>
+        <div class="logo-container">
+            <img src="./images/logo.jpg" alt="Authsafe Logo" class="logo-image">
+            <div class="logo">Authsafe</div>
+        </div>
         <div>
-            <a href="#features">功能</a>
-            <a href="#pricing">价格</a>
+            <!--<a href="#features">功能</a>
+            <a href="#pricing">价格</a> -->
             <a href="#download">下载</a>
         </div>
     </nav>
@@ -84,7 +180,34 @@
         <div class="download-buttons" style="margin-top: 2rem;">
             <a href="#download" class="download-btn">立即免费使用</a>
         </div>
-        <img src="https://via.placeholder.com/800x400" alt="Authsafe应用界面" style="margin-top: 3rem; max-width: 100%;">
+        
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="./images/slide1.png" alt="Authsafe界面1">
+                </div>
+                <div class="carousel-item">
+                    <img src="./images/slide2.png" alt="Authsafe界面2">
+                </div>
+                <div class="carousel-item">
+                    <img src="./images/slide3.png" alt="Authsafe界面3">
+                </div>
+                <div class="carousel-item">
+                    <img src="./images/slide4.png" alt="Authsafe界面3">
+                </div>
+                <div class="carousel-item">
+                    <img src="./images/slide5.png" alt="Authsafe界面3">
+                </div>
+                <div class="carousel-item">
+                    <img src="./images/slide6.png" alt="Authsafe界面3">
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-control prev">&lt;</button>
+                <button class="carousel-control next">&gt;</button>
+            </div>
+            <div class="carousel-indicators"></div>
+        </div>
     </section>
 
     <section class="features" id="features">
@@ -108,7 +231,6 @@
         <div class="download-buttons">
             <a href="#" class="download-btn">iOS 下载</a>
             <a href="#" class="download-btn">Android 下载</a>
-            <a href="#" class="download-btn">Windows 下载</a>
         </div>
     </section>
 
@@ -134,6 +256,57 @@
                 });
             });
         });
+
+        // 轮播图功能
+        const carousel = {
+            currentSlide: 0,
+            items: document.querySelectorAll('.carousel-item'),
+            inner: document.querySelector('.carousel-inner'),
+            indicators: document.querySelector('.carousel-indicators'),
+            
+            init() {
+                // 创建指示器
+                this.items.forEach((_, index) => {
+                    const indicator = document.createElement('div');
+                    indicator.classList.add('indicator');
+                    if (index === 0) indicator.classList.add('active');
+                    indicator.addEventListener('click', () => this.goToSlide(index));
+                    this.indicators.appendChild(indicator);
+                });
+
+                // 添加控制按钮事件
+                document.querySelector('.prev').addEventListener('click', () => this.prev());
+                document.querySelector('.next').addEventListener('click', () => this.next());
+
+                // 自动播放
+                setInterval(() => this.next(), 5000);
+            },
+
+            updateSlide() {
+                this.inner.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+                document.querySelectorAll('.indicator').forEach((ind, index) => {
+                    ind.classList.toggle('active', index === this.currentSlide);
+                });
+            },
+
+            next() {
+                this.currentSlide = (this.currentSlide + 1) % this.items.length;
+                this.updateSlide();
+            },
+
+            prev() {
+                this.currentSlide = (this.currentSlide - 1 + this.items.length) % this.items.length;
+                this.updateSlide();
+            },
+
+            goToSlide(index) {
+                this.currentSlide = index;
+                this.updateSlide();
+            }
+        };
+
+        // 初始化轮播图
+        carousel.init();
     </script>
 </body>
 </html> 
